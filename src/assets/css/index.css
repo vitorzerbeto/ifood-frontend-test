@@ -1,0 +1,69 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+	"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-image: linear-gradient(to right bottom, #d38312, #de6333, #dc4552, #ca316f, #a83289);
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+	monospace;
+}
+
+.flex { display: flex; }
+
+#loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9;
+	background: rgba(0, 0, 0, .3) url(../images/loading.svg) center no-repeat;
+	transition: all .3s;
+	opacity: 0;
+	visibility: hidden;
+}
+
+#loading.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.container-fluid {
+	padding: 0 5vw !important;
+}
+
+.container-fluid > .row {
+	margin: 0;
+}
+
+.container-fluid > .row > div > .row {
+	margin-right: -16px;
+	margin-left: -16px;
+}
+
+#fFilter {
+	background: rgba(255, 255, 255, .3);
+	padding-top: 1rem;
+	border-radius: 7px;
+	overflow: hidden;
+	margin: 0 0 10px;
+	border-left: 4px solid #ca316e;
+}
+
+#fFilter .row {
+	margin: 0 -5px;
+}
+
+#fFilter .form-group {
+	padding: 0 5px;
+}
+
+.btn {border-radius: 100px !important;}
+input,
+select { border:0 !important; border-radius: 0 !important;}

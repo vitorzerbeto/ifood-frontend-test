@@ -7849,11 +7849,6 @@ react-app-polyfill@^0.2.1:
     raf "3.4.1"
     whatwg-fetch "3.0.0"
 
-react-data-grid-addons@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/react-data-grid-addons/-/react-data-grid-addons-5.0.5.tgz#b8c0b3483324d76a6f0fdeeb8610e137dba1c7cf"
-  integrity sha512-TrgGzty1ok1qrLWxE3tGWwETfy/nBuH+AxrxsRUw8BZoF4GpuNUrfLhae5YqBEwXwaA/8ezz9WQTHN1FCyPkVw==
-
 react-data-grid@^5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-5.0.5.tgz#529f5acd4750ae0461e9da66f9f30d6f597eed76"

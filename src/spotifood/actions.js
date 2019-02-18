@@ -1,7 +1,10 @@
 import axios from 'axios'
-import { LOAD_FILTER_FIELDS, LOAD_PLAYLISTS, REFRESH_TOKEN } from '../main/actionTypes'
+import { LOAD_FILTER_FIELDS, LOAD_PLAYLISTS, REFRESH_TOKEN, TOGGLE_LOADING } from '../main/actionTypes'
+
+export const toggleLoading = (show = false) => ({type: TOGGLE_LOADING, payload: show});
 
 export const loadFilterFields = () => {
+	toggleLoading(true);
 	return dispatch => {
 		axios.get(process.env.REACT_APP_FIELDS_URL)
 			.then((resp) => {
@@ -18,7 +21,8 @@ export const loadFilterFields = () => {
 						payload: JSON.parse(localStorage.getItem("filter"))
 					});
 				}
-			});
+			})
+			.then((resp) => dispatch(toggleLoading()));
 	}
 };
 
@@ -29,6 +33,7 @@ export const refreshToken = (expired = false) => {
 			search()
 		];
 	}
+	toggleLoading(true);
 	return dispatch => {
 		axios.post(process.env.REACT_APP_API_URL_TOKEN, {
 			auth: process.env.REACT_APP_API_BASE64,
@@ -38,12 +43,14 @@ export const refreshToken = (expired = false) => {
 			dispatch({type: REFRESH_TOKEN, payload: resp.data.access_token})
 		})
 		.then(resp => dispatch(search()))
+		.then((resp) => dispatch(toggleLoading()));
 	}
 };
 
 export const search = (filter = "") => {
 	const URL = filter === "" ? process.env.REACT_APP_API_URL_PLAYLISTS : `${process.env.REACT_APP_API_URL_PLAYLISTS}?${filter}`;
 
+	toggleLoading(true);
 	return (dispatch, getState) => {
 		axios.get(URL, { headers: { "Authorization": `Bearer ${getState().spotifood.token}` } })
 			.then((resp) => {
@@ -52,7 +59,8 @@ export const search = (filter = "") => {
 						image: el.images[0].url,
 						name: el.name,
 						owner: el.owner.display_name,
-						tracks: el.tracks.total
+						tracks: el.tracks.total,
+						url: el.external_urls.spotify
 					}
 				});
 				localStorage.setItem('playlists', JSON.stringify(resp.data));
@@ -62,12 +70,19 @@ export const search = (filter = "") => {
 				})
 			})
 			.catch(error => {
-				console.log(error.response.data);
-				if(error.response.status) {
+				const status = error.response.status;
+				const message = error.response.data.error.message;
+
+				if(status === 400) {
+					if (message === "Unlaunched country") {
+						alert("Nenhuma playlist para o país selecionado!");
+						document.getElementById('fFilter').reset();
+					}
 					return dispatch(refreshToken(true))
 				} else {
 
 				}
 			})
+			.then((resp) => dispatch(toggleLoading()));
 	}
 };

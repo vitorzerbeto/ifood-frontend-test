@@ -7,7 +7,7 @@ import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 
-import './index.css';
+import './assets/css/index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import App from './App';
 

@@ -14,7 +14,7 @@ const FilterComponents = props => {
 			return (<Input key={'input'+k} config={el} />)
 			})}
 			<div className="form-group col-xs-12 col-sm-6 col-md-2">
-				<button type="submit" className="btn btn-info btn-block">Filtrar</button>
+				<button type="submit" className="btn btn-dark btn-block">Filtrar</button>
 			</div>
 		</div>
 	);
