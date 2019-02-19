@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,800,900');
+
 body {
 	margin: 0;
 	padding: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+	font-family: -apple-system, Montserrat, "Segoe UI", "Roboto", "Oxygen",
 	"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
 	sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-image: linear-gradient(to right bottom, #d38312, #de6333, #dc4552, #ca316f, #a83289);
+	background-image: linear-gradient(to top,#ff8a00,#da1b60);
 }
 
 code {
@@ -15,6 +17,48 @@ code {
 }
 
 .flex { display: flex; }
+
+section {
+	background-color: #090909;
+	text-align: center;
+	padding: 6rem 0;
+	margin: 0 0 10rem;
+}
+section img {
+	max-width: 80%;
+	display: block;
+	margin: 0 auto;
+	width: 200px;
+}
+section h1 {
+	font-weight: bold;
+	font-size: 5rem;
+	background: -webkit-gradient(linear,left top,right top,from(#ff8a00),to(#da1b60));
+	background: linear-gradient(to right,#ff8a00,#da1b60);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+	text-shadow: none;
+}
+section p {
+	font-size: 1.5rem;
+	color: #fff;
+}
+
+section.action img,
+section.action p,
+section.action h1 {
+	opacity: 1;
+	transform: none;
+}
+
+footer {
+	margin: 10rem 0 0;
+	background-color: #090909;
+	padding: 20px 5vw;
+	text-align: right;
+}
 
 #loading {
 	position: fixed;
@@ -53,7 +97,7 @@ code {
 	border-radius: 7px;
 	overflow: hidden;
 	margin: 0 0 10px;
-	border-left: 4px solid #ca316e;
+	border-left: 4px solid #343a40;
 }
 
 #fFilter .row {
@@ -64,6 +108,18 @@ code {
 	padding: 0 5px;
 }
 
+p.desc-search {
+	display: block;
+	font-size: 2rem;
+	width: 100%;
+	text-align: center;
+}
+
 .btn {border-radius: 100px !important;}
 input,
 select { border:0 !important; border-radius: 0 !important;}
+
+@media screen and (max-width: 700px) {
+	section h1 {font-size: 15vw;}
+	p.desc-search {font-size: 1.5rem;}
+}

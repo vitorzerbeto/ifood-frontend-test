@@ -2,14 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {loadFilterFields, search, refreshToken, toggleLoading} from '../actions'
+import {loadFilterFields, search, refreshToken, toggleLoading, changePlaylist} from '../actions'
 import FilterComponents from './FilterComponents'
 
 class Filter extends Component {
 	constructor(props) {
 		super(props);
-
 		this.formSubmit = this.formSubmit.bind(this);
+		this.doSearch = this.doSearch.bind(this);
+		this.keyHandler = this.keyHandler.bind(this);
 	}
 
 	componentWillMount() {
@@ -53,17 +54,50 @@ class Filter extends Component {
 		this.props.search(q);
 	}
 
+	keyHandler(e) {
+		if (e.key === 'Enter') {
+			this.doSearch();
+		} else if (e.key === 'Escape') {
+			this.props.changePlaylist(JSON.parse(localStorage.getItem('playlists')));
+		}
+	}
+
+	doSearch() {
+		const search = document.getElementById('busca').value.trim().toLocaleLowerCase();
+		const playlists = JSON.parse(localStorage.getItem('playlists'));
+
+		if (search === "") this.props.changePlaylist(playlists);
+
+		let new_list = playlists.map(p => {
+			let n = p.name.toLocaleLowerCase();
+
+			if (n.search(search) >= 0)
+				return p;
+			return null;
+		});
+
+		new_list = new_list.filter(function (el) {
+			return el !== null;
+		});
+
+		this.props.changePlaylist(new_list);
+	}
+
 	render() {
 		return (
 			<div className="col-lg-12">
+				<p className="desc-search"><b>Qual o nome da playlist que está procurando?</b></p>
 				<div className="row">
 					<div className="form-group col-lg-10">
-						<label htmlFor="busca">Qual o nome da playlist que está procurando?</label>
-						<input type="text" className="form-control" id="busca" placeholder="Nome da playlist" />
+						<input type="text"
+							   className="form-control"
+							   id="busca"
+							   placeholder="Nome da playlist"
+							   onKeyUp={this.keyHandler}
+						/>
 					</div>
 					<div className="form-group col-lg-2">
-						<label htmlFor="">&nbsp;</label>
-						<button type="button" className="btn btn-dark btn-block">Pesquisar</button>
+						<button type="button" className="btn btn-dark btn-block" onClick={this.doSearch}>Pesquisar</button>
 					</div>
 				</div>
 				<div className="row">
@@ -76,6 +110,7 @@ class Filter extends Component {
 	}
 }
 
-const mapStateToProps = state => ({filter: state.spotifood.filter});
-const mapDispatchToProps = dispatch => bindActionCreators({loadFilterFields, search, refreshToken, toggleLoading}, dispatch);
+const mapStateToProps = state => ({playlists: state.spotifood.playlists});
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({loadFilterFields, search, refreshToken, toggleLoading, changePlaylist}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

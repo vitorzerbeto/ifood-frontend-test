@@ -1,0 +1,15 @@
+section img {
+	transition: all 1s;
+	opacity: 0;
+	transform: translateY(100px);
+}
+section h1 {
+	transition: all 1s .2s;
+	opacity: 0;
+	transform: translateY(100px);
+}
+section p {
+	transition: all 1s .4s;
+	opacity: 0;
+	transform: translateY(100px);
+}

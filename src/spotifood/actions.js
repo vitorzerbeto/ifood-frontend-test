@@ -1,7 +1,13 @@
 import axios from 'axios'
 import { LOAD_FILTER_FIELDS, LOAD_PLAYLISTS, REFRESH_TOKEN, TOGGLE_LOADING } from '../main/actionTypes'
 
-export const toggleLoading = (show = false) => ({type: TOGGLE_LOADING, payload: show});
+export const toggleLoading = (show = false) => ({
+	type: TOGGLE_LOADING, payload: show
+});
+
+export const changePlaylist = (list) => ({
+	type: LOAD_PLAYLISTS, payload: list
+});
 
 export const loadFilterFields = () => {
 	toggleLoading(true);
@@ -63,7 +69,7 @@ export const search = (filter = "") => {
 						url: el.external_urls.spotify
 					}
 				});
-				localStorage.setItem('playlists', JSON.stringify(resp.data));
+				localStorage.setItem('playlists', JSON.stringify(list));
 				return dispatch({
 					type: LOAD_PLAYLISTS,
 					payload: list
@@ -74,13 +80,13 @@ export const search = (filter = "") => {
 				const message = error.response.data.error.message;
 
 				if(status === 400) {
-					if (message === "Unlaunched country") {
-						alert("Nenhuma playlist para o país selecionado!");
-						document.getElementById('fFilter').reset();
-					}
+					alert("Nenhuma playlist para o país selecionado!");
+					console.log(message);
+					document.getElementById('fFilter').reset();
+				} else if(status === 401) {
 					return dispatch(refreshToken(true))
 				} else {
-
+					alert("Ocorreu um erro inesperado, recarregar à página para uma melhor experiência")
 				}
 			})
 			.then((resp) => dispatch(toggleLoading()));
