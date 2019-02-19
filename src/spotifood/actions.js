@@ -49,7 +49,18 @@ export const refreshToken = (expired = false) => {
 			dispatch({type: REFRESH_TOKEN, payload: resp.data.access_token})
 		})
 		.then(resp => dispatch(search()))
-		.then((resp) => dispatch(toggleLoading()));
+		.then((resp) => dispatch(toggleLoading()))
+		.catch(error => {
+			console.log(error.response);
+			alert('Não foi possivel atualizar a lista de playlists');
+
+			if(localStorage.getItem('playlists') !== null) {
+				return dispatch({
+					type: LOAD_PLAYLISTS,
+					payload: JSON.parse(localStorage.getItem('playlists'))
+				})
+			}
+		});
 	}
 };
 
@@ -86,7 +97,7 @@ export const search = (filter = "") => {
 				} else if(status === 401) {
 					return dispatch(refreshToken(true))
 				} else {
-					alert("Ocorreu um erro inesperado, recarregar à página para uma melhor experiência")
+					alert("Ocorreu um erro inesperado, recarregar à página para uma melhor experiência");
 				}
 			})
 			.then((resp) => dispatch(toggleLoading()));
