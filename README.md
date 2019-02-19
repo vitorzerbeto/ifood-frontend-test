@@ -21,7 +21,7 @@ The only thing necessary is to leave the server running. After that, we are good
 
 ## Start app
 
-After install the dependenses, just run the commnad bellow to start the application:
+After install the dependenses and start the [Spotify Refresh Token](https://github.com/vitorzerbeto/spotify_refresh_token#usage) server, just run the commnad bellow to start the application:
 
 ```
 yarn start
